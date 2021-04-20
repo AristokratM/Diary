@@ -1,4 +1,4 @@
-#include "mainwidget.h"
+#include "MainWidget.h"
 #include <QLineEdit>
 #include <QPushButton>
 #include <QString>
@@ -12,7 +12,7 @@
 #include <QWidget>
 
 
-MainWidget::MainWidget(IClient& controller, QWidget *parent) : QWidget(parent)
+MainWidget::MainWidget(INotesController& controller, QWidget *parent) : QWidget(parent)
 {
     int paddingX = 10;
     int paddingY = 10;

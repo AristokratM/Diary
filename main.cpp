@@ -3,11 +3,12 @@
 #include <QApplication>
 #include <QLabel>
 #include <QtSql>
+#include "notescontroller.h"
+#include "UsersController.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    IClient* notesController = new Client();
     QSqlDatabase sdb = QSqlDatabase::addDatabase("QSQLITE");
     sdb.setDatabaseName("Diary.sqlite");
     if (!sdb.open())
@@ -21,8 +22,10 @@ int main(int argc, char *argv[])
         return -1;
     }
     NoteDAO* noteDAO = new NoteDAO();
+    UserDAO* userDAO = new UserDAO();
     INotesController* notesController = new NotesController(*noteDAO);
-    MainWindow* mw = new MainWindow(*notesController);
+    IUsersController* usersController = new UsersController(*userDAO);
+    MainWindow* mw = new MainWindow(*notesController, *usersController);
     mw->show();
     return a.exec();
 }

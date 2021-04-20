@@ -3,7 +3,7 @@
 NotesController::NotesController(NoteDAO& noteDAO)
 {
     this->noteDAO = &noteDAO;
-    this->view = new MainWindow(*this);
+//    this->view = new MainWindow(*this);
 }
 
 Note &NotesController::AddNote(const string& title, const string& text, const int& userId)

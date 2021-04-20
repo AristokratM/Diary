@@ -10,12 +10,13 @@
 #include <QMessageBox>
 #include <QWindow>
 #include <QDialog>
-#include "iclient.h"
-#include "mainwidget.h"
+#include "IUsersController.h"
+#include "MainWidget.h"
+#include "INotesController.h"
 
 
 
-LoginWindow::LoginWindow(QMainWindow *parent, IClient& controller) : QWidget(parent)
+LoginWindow::LoginWindow(QMainWindow *parent, IUsersController& usersController, INotesController& notesController) : QWidget(parent)
 {
     setWindowTitle("Login");
     setGeometry(100, 100, 400, 500);
@@ -24,7 +25,8 @@ LoginWindow::LoginWindow(QMainWindow *parent, IClient& controller) : QWidget(par
     int paddingY = 10;
 
     this->parent = parent;
-    this->controller = &controller;
+    this->usersController = &usersController;
+    this->notesController = &notesController;
 
     inputLoginText = new QLineEdit("Username", this);
     inputLoginText->setGeometry(paddingX, paddingY, 70, 20);
@@ -48,9 +50,9 @@ LoginWindow::LoginWindow(QMainWindow *parent, IClient& controller) : QWidget(par
 void LoginWindow::loginCommand(){
     std::string login = inputLogin->text().toUtf8().constData();
     std::string password = inputPassword->text().toUtf8().constData();
-    if(controller->Login(login, password)){
+    if(usersController->CorrectLoginAndPassword(login, password)){
         //this->accept();
-        MainWidget* widget = new MainWidget(*controller, this);
+        MainWidget* widget = new MainWidget(*notesController, this);
         widget->show();
         //MainWindow::setCentralWidget(loginWidget);
         parent->setCentralWidget(widget);

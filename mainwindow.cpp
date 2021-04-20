@@ -10,27 +10,27 @@
 #include <QMessageBox>
 #include <loginwindow.h>
 #include <QWidget>
-#include "mainwidget.h"
+#include "MainWidget.h"
 
-MainWindow::MainWindow(IClient& controller, QWidget *parent)
+MainWindow::MainWindow(INotesController& notesController, IUsersController& usersController, QWidget *parent)
         : QMainWindow(parent)
 {
     setWindowTitle("Super-puper schodennyk");
     setGeometry(100, 100, 400, 500);
     setMinimumSize(200, 200);
 
-    LoginWindow* loginWidget = new LoginWindow(this, controller);
+    LoginWindow* loginWidget = new LoginWindow(this, usersController, notesController);
     MainWindow::setCentralWidget(loginWidget);
     loginWidget->show();
 }
 
 
 
-void MainWindow::openLogin(IClient& controller){
-    if(controller.isLogined() == false){
-        setWindowTitle("pasasi");
-    }
-}
+//void MainWindow::openLogin(IClient& controller){
+//    if(controller.isLogined() == false){
+//        setWindowTitle("pasasi");
+//    }
+//}
 
 MainWindow::~MainWindow()
 {

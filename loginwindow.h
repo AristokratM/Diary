@@ -5,7 +5,8 @@
 #include <QDialog>
 #include <QLineEdit>
 #include <QTextEdit>
-#include "iclient.h"
+#include "IUsersController.h"
+#include "INotesController.h"
 #include <QMainWindow>
 
 
@@ -22,11 +23,12 @@ private:
 
     QPushButton *okButton;
 
-    IClient *controller;
+    IUsersController *usersController;
+    INotesController *notesController;
 
     QMainWindow *parent;
 public:
-    LoginWindow(QMainWindow *parent, IClient& controller);
+    LoginWindow(QMainWindow *parent, IUsersController& usersController, INotesController& notesController);
     ~LoginWindow();
 };
 

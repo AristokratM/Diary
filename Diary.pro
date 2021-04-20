@@ -14,6 +14,7 @@ SOURCES += \
     UserDAO.cpp \
     UserWindow.cpp \
     UsersController.cpp \
+    MainWidget.cpp \
     main.cpp \
     mainwindow.cpp \
     note.cpp \
@@ -27,6 +28,7 @@ HEADERS += \
     IUsersController.h \
     UserDAO.h \
     UserWindow.h \
+    MainWidget.h \
     UsersController.h \
     mainwindow.h \
     note.h \

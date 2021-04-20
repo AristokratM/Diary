@@ -8,14 +8,14 @@
 #include <QCalendarWidget>
 #include <QListWidget>
 #include <QPushButton>
-#include "iclient.h"
+#include "INotesController.h"
 
 class MainWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    MainWidget(IClient& notesController, QWidget *parent = nullptr);
+    MainWidget(INotesController& notesController, QWidget *parent = nullptr);
     ~MainWidget();
 private slots:
             void handleButton();
@@ -34,7 +34,7 @@ private:
     QPushButton *okButton;
     QPushButton *loadFileBtn;
 
-    IClient *notesController;
+    INotesController *notesController;
     vector<Note> listNotes;
 };
 
