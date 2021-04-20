@@ -12,6 +12,7 @@ public:
     User& AddUser(const string& login, const  string& password);
     User GetUser(const int& id) ;
     vector<User> GetAllUsers();
+    bool CorrectLoginAndPassword(const string& login, const  string& password);
 private:
     UserWindow *view;
     UserDAO *userDAO;

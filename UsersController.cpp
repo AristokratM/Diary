@@ -22,3 +22,6 @@ vector<User> UsersController::GetAllUsers()
 {
     return userDAO->GetAllUsers();
 }
+bool UsersController::CorrectLoginAndPassword(const string& login, const  string& password) {
+    return userDAO->CorrectLoginAndPassword(login, password);
+}

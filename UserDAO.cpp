@@ -73,4 +73,16 @@ User UserDAO::GetUser(const int& id) {
     }
     throw logic_error("No user found!");
 }
+bool UserDAO::CorrectLoginAndPassword(const string& login, const  string& password) {
+    QSqlQuery query;
+    query.prepare("SELECT * FROM Users WHERE login=:login and password=:password)");
+    query.bindValue("login", QString::fromStdString(login));
+    query.bindValue("password", QString::fromStdString(password));
+    if (query.exec())
+    {
+        QSqlRecord record = query.record();
+        return record.count() != 0;
+    }
+    throw logic_error("No user found!");
+}
 
