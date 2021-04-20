@@ -17,12 +17,17 @@ class MainWidget : public QWidget
 public:
     MainWidget(INotesController& notesController, QWidget *parent = nullptr);
     ~MainWidget();
+
+    int getUserId() const;
+    void setUserId(int value);
+
 private slots:
-            void handleButton();
+    void handleButton();
     void refreshList();
     void resfreshNoteTextField();
     void saveFile();
 private:
+    int        userId;
     QTextEdit *inputFieldNoteText;
     QLineEdit *inputFieldNoteTitle;
     QLineEdit *titleLb;

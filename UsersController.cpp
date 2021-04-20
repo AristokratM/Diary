@@ -5,7 +5,6 @@
 UsersController::UsersController(UserDAO& userDAO)
 {
     this->userDAO = &userDAO;
-    this->view = new UserWindow(*this);
 }
 
 User& UsersController::AddUser(const string &login, const string &password)
@@ -22,6 +21,6 @@ vector<User> UsersController::GetAllUsers()
 {
     return userDAO->GetAllUsers();
 }
-bool UsersController::CorrectLoginAndPassword(const string& login, const  string& password) {
+int UsersController::CorrectLoginAndPassword(const string& login, const  string& password) {
     return userDAO->CorrectLoginAndPassword(login, password);
 }

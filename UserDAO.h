@@ -13,7 +13,7 @@ public:
     ~UserDAO();
     User& AddUser(const string& login, const  string& password);
     User GetUser(const int& id) ;
-    bool CorrectLoginAndPassword(const string& login, const  string& password);
+    int CorrectLoginAndPassword(const string& login, const  string& password);
     vector<User> GetAllUsers();
 };
 #endif // USERDAO_H

@@ -62,7 +62,7 @@ void MainWidget::handleButton() {
     string title = inputFieldNoteTitle->text().toUtf8().constData();
     notesController->AddNote(
             inputFieldNoteTitle->text().toUtf8().constData(),
-            inputFieldNoteText->toPlainText().toUtf8().constData(), 1);
+            inputFieldNoteText->toPlainText().toUtf8().constData(), userId);
     inputFieldNoteTitle->clear();
     inputFieldNoteText->clear();
     refreshList();
@@ -71,7 +71,7 @@ void MainWidget::handleButton() {
 void MainWidget::refreshList() {
     uiNotes->clear();
     listNotes.clear();
-    std::vector<Note> notesList = notesController->GetAllNotes();
+    std::vector<Note> notesList = notesController->GetAllNotesByUserId(userId);
     QStringList listItems = QStringList ();
     for(Note note: notesList) {
         listNotes.push_back(note);
@@ -111,11 +111,21 @@ void MainWidget::saveFile()
         header = header.erase(stop);
         header = header.substr(start, stop);
 
-        notesController->AddNote(header, text, 1);
+        notesController->AddNote(header, text, userId);
         file.close();
 
         refreshList();
     }
+}
+
+int MainWidget::getUserId() const
+{
+    return userId;
+}
+
+void MainWidget::setUserId(int value)
+{
+    userId = value;
 }
 
 MainWidget::~MainWidget()

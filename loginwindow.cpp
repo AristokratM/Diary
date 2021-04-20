@@ -50,10 +50,13 @@ LoginWindow::LoginWindow(QMainWindow *parent, IUsersController& usersController,
 void LoginWindow::loginCommand(){
     std::string login = inputLogin->text().toUtf8().constData();
     std::string password = inputPassword->text().toUtf8().constData();
-    if(true){
+//    int userId = usersController->CorrectLoginAndPassword(login, password);
+    int userId = 1;
+    if( userId != -1){
         //usersController->CorrectLoginAndPassword(login, password)
         //this->accept();
         MainWidget* widget = new MainWidget(*notesController, this);
+        widget->setUserId(userId);
         widget->show();
         //MainWindow::setCentralWidget(loginWidget);
         parent->setCentralWidget(widget);

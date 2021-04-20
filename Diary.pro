@@ -12,7 +12,6 @@ CONFIG += c++11
 SOURCES += \
     loginwindow.cpp \
     UserDAO.cpp \
-    UserWindow.cpp \
     UsersController.cpp \
     MainWidget.cpp \
     main.cpp \
@@ -27,7 +26,6 @@ HEADERS += \
     loginwindow.h \
     IUsersController.h \
     UserDAO.h \
-    UserWindow.h \
     MainWidget.h \
     UsersController.h \
     mainwindow.h \
