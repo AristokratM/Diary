@@ -3,6 +3,7 @@
 #include<string>
 #include <vector>
 #include "user.h"
+#include <QtSql>
 using namespace std;
 
 class UserDAO

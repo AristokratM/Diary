@@ -21,6 +21,7 @@ private slots:
     void refreshList();
     void resfreshNoteTextField();
     void saveFile();
+    void openWidget();
 private:
     QTextEdit *inputFieldNoteText;
     QLineEdit *inputFieldNoteTitle;

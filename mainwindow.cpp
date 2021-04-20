@@ -8,6 +8,8 @@
 #include <QVector>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <loginwindow.h>
+#include <QWidget>
 MainWindow::MainWindow(INotesController& notesController, QWidget *parent)
 : QMainWindow(parent)
 {
@@ -55,12 +57,16 @@ MainWindow::MainWindow(INotesController& notesController, QWidget *parent)
     loadFileBtn->setGeometry(paddingX, textLine + 50, 100, 35);
     connect(loadFileBtn, SIGNAL(released()), this, SLOT(saveFile()));
 
+
+    QPushButton *openLogin = new QPushButton("Llogin", this);
+    openLogin->setGeometry(paddingX, textLine + 90, 60, 35);
+    connect(openLogin, SIGNAL(released()), this, SLOT(openWidget()));
 }
 void MainWindow::handleButton() {
     string title = inputFieldNoteTitle->text().toUtf8().constData();
     notesController->AddNote(
                 inputFieldNoteTitle->text().toUtf8().constData(),
-                inputFieldNoteText->toPlainText().toUtf8().constData());
+                inputFieldNoteText->toPlainText().toUtf8().constData(), 1);
     inputFieldNoteTitle->clear();
     inputFieldNoteText->clear();
     refreshList();
@@ -118,12 +124,19 @@ void MainWindow::saveFile()
         header = header.erase(stop);
         header = header.substr(start, stop);
 
-        notesController->AddNote(header, text);
+        notesController->AddNote(header, text, 1);
         file.close();
+
         refreshList();
     }
 }
 
+
+void MainWindow::openWidget(){
+    LoginWindow* window = new LoginWindow(this);
+    window->show();
+   // hide();
+}
 
 MainWindow::~MainWindow()
 {

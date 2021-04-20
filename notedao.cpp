@@ -1,36 +1,119 @@
 #include "notedao.h"
-
+#include <algorithm>
+#include <iterator>
+#include <numeric>
 #include <stdexcept>
 
-NoteDAO::NoteDAO()
+NoteDAO::NoteDAO(QSqlDatabase& sdb)
 {
-    AddNote("First Note", "Some text 1");
-    AddNote("Second Note", "Some text 2");
-    AddNote("Third Note", "Some text 3");
-    AddNote("Fourth Note", "Some text 4");
+    this->sdb = sdb;
 }
 NoteDAO::~NoteDAO() {
 
 }
 
-Note& NoteDAO::AddNote(const string& title, const  string& text) {
+Note& NoteDAO::AddNote(const string& title, const  string& text, const int& userId) {
     Note* note = new Note();
     note->setText(text);
     note->setTitle(title);
     note->setId(nextNoteId++);
-    notes.push_back(*note);
+    note->setUserId(userId);
+    QSqlQuery query;
+    query.prepare("INSERT INTO Notes(id, userId, title, text, createdDate) "
+            "VALUES(:id, :userId, :title, :text, :createdDate);");
+
+    query.bindValue(":id", note->getId());
+    query.bindValue(":userId", note->getUserId());
+    query.bindValue(":title", QString::fromStdString(note->getTitle()));
+    query.bindValue(":text", QString::fromStdString(note->getText()));
+    query.bindValue(":createdDate", note->getCreatedDate());
+    if (!query.exec())
+    {
+        qDebug() << "Кажется данные не вставляются, " + query.lastError().text();
+    }
     return *note;
 }
 
 vector<Note> NoteDAO::GetAllNotes() {
+    QString str = "SELECT * FROM Notes;";
+    QSqlQuery query;
+    if (query.exec(str))
+    {
+        QSqlRecord record = query.record();
+        int id = 0, userId = 0;
+        QString title = "", text = "";
+
+        while (query.next())
+        {
+            id = query.value(record.indexOf("id")).toInt();
+            userId = query.value(record.indexOf("userId")).toInt();
+            title = query.value(record.indexOf("title")).toString();
+            text = query.value(record.indexOf("text")).toString();
+
+            Note *note = new Note();
+            note->setId(id);
+            note->setUserId(userId);
+            note->setTitle(title.toStdString());
+            note->setText(text.toStdString());
+            notes.push_back(*note);
+
+        }
+    }
     return notes;
 }
 
-Note NoteDAO::GetNote(const int& id) {
-    for(auto note: notes) {
-        if(note.getId() == id)
-            return note;
+vector<Note> NoteDAO::GetAllNotesByUserId(const int &id)
+{
+    vector<Note> userNotes;
+    QSqlQuery query;
+    query.prepare("SELECT * FROM Notes WHERE userId=:id)");
+    query.bindValue("id", id);
+    if (query.exec())
+    {
+        QSqlRecord record = query.record();
+        int id = 0, userId = 0;
+        QString title = "", text = "";
+
+        while (query.next())
+        {
+            id = query.value(record.indexOf("id")).toInt();
+            userId = query.value(record.indexOf("userId")).toInt();
+            title = query.value(record.indexOf("title")).toString();
+            text = query.value(record.indexOf("text")).toString();
+
+            Note *note = new Note();
+            note->setId(id);
+            note->setUserId(userId);
+            note->setTitle(title.toStdString());
+            note->setText(text.toStdString());
+            userNotes.push_back(*note);
+        }
     }
+    return userNotes;
+}
+
+Note NoteDAO::GetNote(const int& id) {
+    QSqlQuery query;
+    query.prepare("SELECT * FROM Notes WHERE id=:id)");
+    query.bindValue("id", id);
+    if (query.exec())
+    {
+        QSqlRecord record = query.record();
+        int id = 0, userId = 0;
+        QString title = "", text = "";
+
+            id = query.value(record.indexOf("id")).toInt();
+            userId = query.value(record.indexOf("userId")).toInt();
+            title = query.value(record.indexOf("title")).toString();
+            text = query.value(record.indexOf("text")).toString();
+
+            Note *note = new Note();
+            note->setId(id);
+            note->setUserId(userId);
+            note->setTitle(title.toStdString());
+            note->setText(text.toStdString());
+            return *note;
+     }
     throw logic_error("No note found!");
 }
 void NoteDAO::DisplayAll() const {
