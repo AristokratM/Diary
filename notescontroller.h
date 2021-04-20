@@ -8,9 +8,10 @@ class NotesController:  public INotesController
 {
 public:
     NotesController(NoteDAO& noteDAO);
-    Note& AddNote(const string& title, const  string& text);
+    Note& AddNote(const string& title, const  string& text, const int& userId);
     Note GetNote(const int& id) ;
     vector<Note> GetAllNotes();
+    vector<Note> GetAllNotesByUserId(const int& id);
 private:
     MainWindow *view;
     NoteDAO *noteDAO;

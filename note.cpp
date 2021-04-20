@@ -26,6 +26,16 @@ void Note::setText(const string &value)
     text = value;
 }
 
+int Note::getUserId() const
+{
+    return userId;
+}
+
+void Note::setUserId(const int &value)
+{
+    userId = value;
+}
+
 time_t Note::getCreatedDate() const
 {
     return createdDate;
