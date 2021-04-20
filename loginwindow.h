@@ -5,22 +5,31 @@
 #include <QDialog>
 #include <QLineEdit>
 #include <QTextEdit>
+#include "IUsersController.h"
+#include "INotesController.h"
+#include <QMainWindow>
 
-class LoginWindow : public QDialog
+
+class LoginWindow : public QWidget
 {
     Q_OBJECT
 private slots:
-    void loginCommand();
+            void loginCommand();
 private:
     QLineEdit *inputLoginText;
     QLineEdit *inputLogin;
     QLineEdit *inputPasswordText;
     QLineEdit *inputPassword;
 
+    QPushButton *okButton;
 
+    IUsersController *usersController;
+    INotesController *notesController;
+
+    QMainWindow *parent;
 public:
-    LoginWindow(QWidget *parent);
-    virtual ~LoginWindow() {}
+    LoginWindow(QMainWindow *parent, IUsersController& usersController, INotesController& notesController);
+    ~LoginWindow();
 };
 
 #endif // LOGINWINDOW_H

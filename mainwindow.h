@@ -7,30 +7,22 @@
 #include <QTextEdit>
 #include <QCalendarWidget>
 #include <QListWidget>
+#include <QPushButton>
 #include "INotesController.h"
+#include "IUsersController.h"
+
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(INotesController& notesController, QWidget *parent = nullptr);
+    MainWindow(INotesController& notesController, IUsersController& usersController, QWidget *parent = nullptr);
     ~MainWindow();
 private slots:
-    void handleButton();
-    void refreshList();
-    void resfreshNoteTextField();
-    void saveFile();
-    void openWidget();
+//            void openLogin(INotesController& controller);
 private:
-    QTextEdit *inputFieldNoteText;
-    QLineEdit *inputFieldNoteTitle;
-    QLineEdit *titleLb;
-    QLineEdit *textLb;
-    QTextEdit *outputField;
-    QCalendarWidget *calendar;
-    QListWidget *uiNotes;
     INotesController *notesController;
-    vector<Note> listNotes;
+
 };
 #endif // MAINWINDOW_H
