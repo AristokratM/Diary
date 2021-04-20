@@ -67,7 +67,7 @@ vector<Note> NoteDAO::GetAllNotesByUserId(const int &id)
     vector<Note> userNotes;
     QSqlQuery query;
     query.prepare("SELECT * FROM Notes WHERE userId=:id;");
-    query.bindValue("id", id);
+    query.bindValue(":id", id);
     if (query.exec())
     {
         QSqlRecord record = query.record();
@@ -95,7 +95,7 @@ vector<Note> NoteDAO::GetAllNotesByUserId(const int &id)
 Note NoteDAO::GetNote(const int& id) {
     QSqlQuery query;
     query.prepare("SELECT * FROM Notes WHERE id=:id)");
-    query.bindValue("id", id);
+    query.bindValue(":id", id);
     if (query.exec())
     {
         QSqlRecord record = query.record();

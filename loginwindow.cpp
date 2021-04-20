@@ -50,20 +50,22 @@ LoginWindow::LoginWindow(QMainWindow *parent, IUsersController& usersController,
 void LoginWindow::loginCommand(){
     std::string login = inputLogin->text().toUtf8().constData();
     std::string password = inputPassword->text().toUtf8().constData();
-//    int userId = usersController->CorrectLoginAndPassword(login, password);
-    int userId = 1;
+    int userId = usersController->CorrectLoginAndPassword(login, password);
     if( userId != -1){
         //usersController->CorrectLoginAndPassword(login, password)
         //this->accept();
-        MainWidget* widget = new MainWidget(*notesController, this);
-        widget->setUserId(userId);
+        MainWidget* widget = new MainWidget(*notesController, userId, this);
         widget->show();
         //MainWindow::setCentralWidget(loginWidget);
         parent->setCentralWidget(widget);
         close();
     } else {
-        close();
-        parent->close();
+        QMessageBox *msgBox = new QMessageBox(this);
+            msgBox->setWindowModality(Qt::NonModal);
+            msgBox->setInformativeText("Наступного разу точно вийде :) ");
+            msgBox->setStandardButtons(QMessageBox::Ok);
+            msgBox->setDefaultButton(QMessageBox::Ok);
+            msgBox->show();
     }
 }
 

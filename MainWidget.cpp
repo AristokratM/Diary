@@ -1,4 +1,4 @@
-#include "MainWidget.h"
+﻿#include "MainWidget.h"
 #include <QLineEdit>
 #include <QPushButton>
 #include <QString>
@@ -12,8 +12,9 @@
 #include <QWidget>
 
 
-MainWidget::MainWidget(INotesController& controller, QWidget *parent) : QWidget(parent)
+MainWidget::MainWidget(INotesController& controller, int userId, QWidget *parent) : QWidget(parent)
 {
+    this->userId = userId;
     int paddingX = 10;
     int paddingY = 10;
     this->notesController = &controller;
@@ -53,8 +54,8 @@ MainWidget::MainWidget(INotesController& controller, QWidget *parent) : QWidget(
     loadFileBtn = new QPushButton("Load file", this);
     loadFileBtn->setGeometry(paddingX, textLine + 50, 100, 35);
     connect(loadFileBtn, SIGNAL(released()), this, SLOT(saveFile()));
-
 //    this->setVisible(true);
+    uiNotes->clear();
     refreshList();
 }
 

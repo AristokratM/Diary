@@ -15,7 +15,7 @@ class MainWidget : public QWidget
     Q_OBJECT
 
 public:
-    MainWidget(INotesController& notesController, QWidget *parent = nullptr);
+    MainWidget(INotesController& notesController, int userId, QWidget *parent = nullptr);
     ~MainWidget();
 
     int getUserId() const;

@@ -55,8 +55,8 @@ vector<User> UserDAO::GetAllUsers() {
 
 User UserDAO::GetUser(const int& id) {
     QSqlQuery query;
-    query.prepare("SELECT * FROM Users WHERE id=:id);");
-    query.bindValue("id", id);
+    query.prepare("SELECT * FROM Users WHERE id=:id;");
+    query.bindValue(":id", id);
     if (query.exec())
     {
         QSqlRecord record = query.record();
@@ -76,18 +76,16 @@ User UserDAO::GetUser(const int& id) {
 int UserDAO::CorrectLoginAndPassword(const string& login, const  string& password) {
     QSqlQuery query;
     query.prepare("SELECT * FROM Users WHERE login=:login and password=:password;");
-    query.bindValue("login", QString::fromStdString(login));
-    query.bindValue("password", QString::fromStdString(password));
-    qDebug() << "Debug.... " + QString::fromStdString(login) + " " + QString::fromStdString(password);
+    query.bindValue(":login", QString::fromStdString(login));
+    query.bindValue(":password", QString::fromStdString(password));
     if (query.exec())
     {
           QSqlRecord record = query.record();
         while(query.next()) {
-            qDebug() << "Debug.... " + query.value(record.indexOf("id")).toString();
             if (record.count() == 0) return -1;
             return query.value(record.indexOf("id")).toInt();
         }
     }
-    throw logic_error("No user found!");
+    return -1;
 }
 
