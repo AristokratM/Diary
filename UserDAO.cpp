@@ -4,10 +4,7 @@
 
 UserDAO::UserDAO()
 {
-    AddUser("user1", "112345");
-    AddUser("user2", "212345");
-    AddUser("user3", "312345");
-    AddUser("user4", "412345");
+
 }
 UserDAO::~UserDAO() {
 
@@ -17,12 +14,10 @@ User& UserDAO::AddUser(const string& login, const  string& password) {
     User* user = new User();
     user->setLogin(login);
     user->setPassword(password);
-    user->setId(nextUserId++);
     QSqlQuery query;
-    query.prepare("INSERT INTO Users(id, login, password) "
-            "VALUES(:id, :login, :password);");
+    query.prepare("INSERT INTO Users(login, password) "
+            "VALUES(:login, :password);");
 
-    query.bindValue(":id", user->getId());
     query.bindValue(":title", QString::fromStdString(user->getLogin()));
     query.bindValue(":text", QString::fromStdString(user->getLogin()));
     if (!query.exec())
@@ -33,6 +28,7 @@ User& UserDAO::AddUser(const string& login, const  string& password) {
 }
 
 vector<User> UserDAO::GetAllUsers() {
+    vector<User> users;
     QString str = "SELECT * FROM Users;";
     QSqlQuery query;
     if (query.exec(str))
@@ -77,8 +73,4 @@ User UserDAO::GetUser(const int& id) {
     }
     throw logic_error("No user found!");
 }
-void UserDAO::DisplayAll() const {
-    for(auto user: users) {
-        user.Display();
-    }
-}
+

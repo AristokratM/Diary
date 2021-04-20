@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
         qDebug() << "Что-то не так с соединением!";
         return -1;
     }
-    NoteDAO* noteDAO = new NoteDAO(sdb);
+    NoteDAO* noteDAO = new NoteDAO();
     INotesController* notesController = new NotesController(*noteDAO);
     MainWindow* mw = new MainWindow(*notesController);
     mw->show();

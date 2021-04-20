@@ -4,9 +4,9 @@
 #include <numeric>
 #include <stdexcept>
 
-NoteDAO::NoteDAO(QSqlDatabase& sdb)
+NoteDAO::NoteDAO()
 {
-    this->sdb = sdb;
+
 }
 NoteDAO::~NoteDAO() {
 
@@ -16,17 +16,16 @@ Note& NoteDAO::AddNote(const string& title, const  string& text, const int& user
     Note* note = new Note();
     note->setText(text);
     note->setTitle(title);
-    note->setId(nextNoteId++);
     note->setUserId(userId);
     QSqlQuery query;
-    query.prepare("INSERT INTO Notes(id, userId, title, text, createdDate) "
-            "VALUES(:id, :userId, :title, :text, :createdDate);");
+    query.prepare("INSERT INTO Notes(userId, title, text, createdDate) "
+            "VALUES(:userId, :title, :text, :createdDate);");
 
-    query.bindValue(":id", note->getId());
     query.bindValue(":userId", note->getUserId());
     query.bindValue(":title", QString::fromStdString(note->getTitle()));
     query.bindValue(":text", QString::fromStdString(note->getText()));
-    query.bindValue(":createdDate", note->getCreatedDate());
+    query.bindValue(":createdDate", QVariant::fromValue(note->getCreatedDate()));
+
     if (!query.exec())
     {
         qDebug() << "Кажется данные не вставляются, " + query.lastError().text();
@@ -35,6 +34,7 @@ Note& NoteDAO::AddNote(const string& title, const  string& text, const int& user
 }
 
 vector<Note> NoteDAO::GetAllNotes() {
+    vector<Note> notes;
     QString str = "SELECT * FROM Notes;";
     QSqlQuery query;
     if (query.exec(str))
@@ -116,8 +116,5 @@ Note NoteDAO::GetNote(const int& id) {
      }
     throw logic_error("No note found!");
 }
-void NoteDAO::DisplayAll() const {
-    for(auto note: notes) {
-        note.Display();
-    }
-}
+
+
