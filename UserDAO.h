@@ -3,6 +3,7 @@
 #include<string>
 #include <vector>
 #include "user.h"
+#include <QtSql>
 using namespace std;
 
 class UserDAO
@@ -12,11 +13,7 @@ public:
     ~UserDAO();
     User& AddUser(const string& login, const  string& password);
     User GetUser(const int& id) ;
+    bool CorrectLoginAndPassword(const string& login, const  string& password);
     vector<User> GetAllUsers();
-    void DisplayAll() const;
-
-private:
-    int nextUserId = 0;
-    vector<User> users;
 };
 #endif // USERDAO_H

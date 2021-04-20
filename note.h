@@ -15,6 +15,9 @@ public:
     string getText() const;
     void setText(const string &value);
 
+    int getUserId() const;
+    void setUserId(const int &value);
+
     time_t getCreatedDate() const;
 
     int getId() const;
@@ -28,6 +31,7 @@ private:
     string text;
     time_t createdDate = time(NULL);
     int id;
+    int userId;
 };
 
 #endif // NOTE_H

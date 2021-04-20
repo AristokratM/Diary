@@ -4,6 +4,7 @@
 #include<string>
 #include <vector>
 #include "note.h"
+#include <QtSql>
 using namespace std;
 
 class NoteDAO
@@ -11,14 +12,11 @@ class NoteDAO
 public:
     NoteDAO();
     ~NoteDAO();
-    Note& AddNote(const string& title, const  string& text);
+    Note& AddNote(const string& title, const  string& text, const int& userId);
     Note GetNote(const int& id) ;
     vector<Note> GetAllNotes();
-    void DisplayAll() const;
+    vector<Note> GetAllNotesByUserId(const int& id);
 
-private:
-    int nextNoteId = 0;
-    vector<Note> notes;
 };
 
 #endif // NOTEDAO_H
